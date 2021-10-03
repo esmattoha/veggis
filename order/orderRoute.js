@@ -34,6 +34,41 @@ orderRouter.post("/order", isLoggedIn, catchAsync(async(req, res, next) =>{
 
   res.json(order);
 }))
+/**
+ * 
+ */
+ orderRouter.get(
+  "/orders",
+  [isLoggedIn, checkAdmin],
+  catchAsync(async (req, res, next) => {
+    const orderResources = await Order.find({});
 
+    if (orderResources.length <= 0) {
+      return next(new AppError("No Orders there.", 404));
+    }
+
+    res.status(200).json({
+      status: "Success",
+      data: orderResources,
+    });
+  })
+);
+
+orderRouter.get(
+  "/order/:id",
+  isLoggedIn,
+  catchAsync(async (req, res, next) => {
+    const orderResource = await Order.findById(req.params.id);
+
+    if (!orderResource) {
+      return next(new AppError("No Orders there.", 404));
+    }
+
+    res.status(200).json({
+      status: "Success",
+      data: orderResource,
+    });
+  })
+);
 // export
 module.exports = { orderRouter };
