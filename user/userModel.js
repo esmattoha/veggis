@@ -46,6 +46,9 @@ const userSchema = new Schema({
     default: null,
     enum: [null, true],
   },
+  stripeId : {
+    type : String
+  }
 },{
   timestamps: true
 });

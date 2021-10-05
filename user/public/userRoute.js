@@ -21,7 +21,7 @@ const userRoute = express.Router();
 userRoute.post(
   "/user/register",
   catchAsync(async (req, res, next) => {
-    const { name, email, password, confirmPassword, phone, type } = req.body;
+    const { name, email, password, confirmPassword, phone, type, stripeId } = req.body;
 
     if (!name || !email || !password || !confirmPassword || !phone) {
       return next(new AppError(`Invalid Input Data.`, 406));
@@ -38,7 +38,8 @@ userRoute.post(
       email,
       password: encryptedPassword,
       phone,
-      type
+      type,
+      stripeId
     });
 
     if (!userResource) {
