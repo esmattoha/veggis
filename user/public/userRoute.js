@@ -21,14 +21,15 @@ const userRoute = express.Router();
 userRoute.post(
   "/user/register",
   catchAsync(async (req, res, next) => {
-    const { name, email, password, confirmPassword, phone, type, stripeId } = req.body;
+    const { name, email, password, confirmPassword, phone, type, stripeId } =
+      req.body;
 
     if (!name || !email || !password || !confirmPassword || !phone) {
       return next(new AppError(`Invalid Input Data.`, 406));
     }
 
-    if(password !== confirmPassword){
-        return next(new AppError(`Please match both password.`, 406));
+    if (password !== confirmPassword) {
+      return next(new AppError(`Please match both password.`, 406));
     }
 
     const encryptedPassword = await encryptPassword(password);
@@ -39,7 +40,7 @@ userRoute.post(
       password: encryptedPassword,
       phone,
       type,
-      stripeId
+      stripeId,
     });
 
     if (!userResource) {
@@ -91,7 +92,7 @@ userRoute.post(
   "/user/add-new-address",
   isLoggedIn,
   catchAsync(async (req, res, next) => {
-    const  customer  = req.user._id;
+    const customer = req.user._id;
     const { long, lat, addressLine1, addressLine2, city, state, zipcode } =
       req.body;
 
@@ -125,4 +126,4 @@ userRoute.post(
 );
 
 // export
-module.exports = { userRoute };
+module.exports = userRoute;

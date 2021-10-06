@@ -1,6 +1,6 @@
 /**
  *  Title : Veggis
- *  Description : Vegetable Delevery
+ *  Description : Vegetable Delivery
  *  Author : Dipu(me)
  *  Date : 17.08.2021
  */
@@ -11,15 +11,15 @@ const env = require("dotenv");
 // import Internal modules
 const { app } = require("./app");
 
-// env Configuration 
+// env Configuration
 env.config();
 
-const PORT = process.env.PORT || 3000 ;
+const PORT = process.env.PORT || 3000;
 
 // PORT listening
-app.listen(PORT, (error) =>{
-    if(error){
-        console.log(error);
-    }
-    console.log(`Server running on PORT ${ PORT }`);
+app.listen(PORT, (error) => {
+  if (error) {
+    console.log(error);
+  }
+  console.log(`Server running on PORT ${PORT}`);
 });
