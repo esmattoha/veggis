@@ -1,7 +1,6 @@
 // Import Dependencies
 const Stripe = require("stripe");
-const stripe = Stripe(process.env.STRIPE_PRIVATE_KEY);
-
+const stripe = Stripe("sk_test_51HWarCBCiywqtJLTLb0IA9JSqBjVuvYbRHrecz3RxgetmyWLNIQZA9zTHLWzZ2cJ9zY769qYR93Gdyc5X8lNYHvC00Q1vyRRSh");
 
 const makePaymentIntent = async (
   orderDetails,
@@ -9,6 +8,7 @@ const makePaymentIntent = async (
   amount,
   cardDetails
 ) => {
+
   const intentObj = {
     amount: parseInt(amount * 100),
     currency: "usd",
@@ -35,7 +35,5 @@ const makePaymentIntent = async (
   return Promise.resolve(paymentIntent);
 };
 
-
 //export
-
 module.exports = { makePaymentIntent };
