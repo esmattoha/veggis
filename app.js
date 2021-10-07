@@ -7,6 +7,7 @@ const { userRoute } = require("./user/public/userRoute");
 const { adminRoute } = require("./user/private/userRoute")
 const { productRoute } = require('./product/productRoute');
 const { orderRouter } = require("./order/orderRoute");
+const { paymentRoute } = require("./payment/paymentRoute");
 const {globalErrorHandler}  = require("./errors/errorHandler");
 const {AppError} = require("./utils/appError");
 
@@ -41,6 +42,7 @@ app.use("/veggis/api/",userRoute);
 app.use("/veggis/api", adminRoute);
 app.use("/veggis/api/", productRoute);
 app.use("/veggis/api/", orderRouter);
+app.use("/veggis/api/payment/", paymentRoute);
 
 
 
