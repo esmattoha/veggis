@@ -51,15 +51,30 @@ paymentRoute.post(
 /**
  * 
  */
-// paymentRouter.post("/", isLoggedIn, catchAsync(async(req, res, next)=>{
-//     const { paymentIntent } = req.body;
+paymentRouter.post("/", isLoggedIn, catchAsync(async(req, res, next)=>{
+  const { paymentIntent } = req.body;
+  if (!paymentIntent) {
+    return new AppError(`Invalid data input`, 406);
+  }
 
-//     if (!paymentIntent) {
-//         return next(new AppError("Invalid Input Data", 406));
-//       }
+  const intentData = await stripe.paymentIntents.retrieve(paymentIntent);
+  const orderNumber = intentData.metadata.orderNumber;
 
-//       const 
-// }))
+  const order = await Order.findOne(orderNumber);
+
+  const createdPayment = await Payment.create({
+    order: order._id,
+    customer: order.customer,
+    status: intentData.status,
+    amount: intentData.amount / 100,
+    transactionId: intentData.id,
+  });
+
+  res.status(201).json({
+    status: "success",
+    data: createdPayment,
+  });
+}))
 
 
 // export
