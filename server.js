@@ -7,12 +7,14 @@
 
 // Import external Dependencies
 const env = require("dotenv");
+const path = require("path");
+
+// env Configuration 
+env.config({path : path.resolve(__dirname ,"./.env")});
 
 // import Internal modules
 const { app } = require("./app");
 
-// env Configuration 
-env.config();
 
 const PORT = process.env.PORT || 3000 ;
 
