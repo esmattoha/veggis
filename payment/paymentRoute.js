@@ -51,7 +51,7 @@ paymentRoute.post(
 /**
  * 
  */
-paymentRouter.post("/", isLoggedIn, catchAsync(async(req, res, next)=>{
+paymentRoute.post("/", isLoggedIn, catchAsync(async(req, res, next)=>{
   const { paymentIntent } = req.body;
   if (!paymentIntent) {
     return new AppError(`Invalid data input`, 406);
@@ -75,6 +75,7 @@ paymentRouter.post("/", isLoggedIn, catchAsync(async(req, res, next)=>{
     data: createdPayment,
   });
 }))
+
 
 
 // export
