@@ -1,9 +1,11 @@
 // import external Dependecies
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require('cors');
 
 //import internal Dependencies 
 const { userRoute } = require("./user/public/userRoute");
+const { oAuthRoute } = require("./OAuth/googleAuthRoute");
 const { adminRoute } = require("./user/private/userRoute")
 const { productRoute } = require('./product/productRoute');
 const { orderRouter } = require("./order/orderRoute");
@@ -14,6 +16,12 @@ const {AppError} = require("./utils/appError");
 
 const app = express();
 
+const corsOptions = {
+    Credential: true,
+    origin:['http://localhost:3000', 'http://localhost:8080',]
+}
+
+app.use(cors(corsOptions));
 
 // DataBase Connection
 (async () => {
@@ -32,13 +40,13 @@ const app = express();
     
 })();
 
-
-
 // JSON Parser
 app.use(express.json());
 
+
 // routes
 app.use("/veggis/api/",userRoute);
+app.use("/veggis/api/",oAuthRoute);
 app.use("/veggis/api", adminRoute);
 app.use("/veggis/api/", productRoute);
 app.use("/veggis/api/", orderRouter);
