@@ -5,7 +5,8 @@ const cors = require('cors');
 
 //import internal Dependencies 
 const { userRoute } = require("./user/public/userRoute");
-const { oAuthRoute } = require("./OAuth/googleAuthRoute");
+const { oAuthRoute } = require("./OAuth/google/googleAuthRoute");
+const { githubAuthRoute } = require("./OAuth/github/githubAuthRoute");
 const { adminRoute } = require("./user/private/userRoute")
 const { productRoute } = require('./product/productRoute');
 const { orderRouter } = require("./order/orderRoute");
@@ -15,6 +16,7 @@ const {AppError} = require("./utils/appError");
 
 
 const app = express();
+
 
 const corsOptions = {
     Credential: true,
@@ -43,10 +45,10 @@ app.use(cors(corsOptions));
 // JSON Parser
 app.use(express.json());
 
-
 // routes
 app.use("/veggis/api/",userRoute);
-app.use("/veggis/api/",oAuthRoute);
+app.use(oAuthRoute);
+app.use(githubAuthRoute);
 app.use("/veggis/api", adminRoute);
 app.use("/veggis/api/", productRoute);
 app.use("/veggis/api/", orderRouter);

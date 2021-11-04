@@ -11,7 +11,6 @@ const {
   isMatch,
   tokenImplement,
 } = require("./userController");
-const { passport } = require("./../../OAuth/googleAuth");
 
 const userRoute = express.Router();
 
@@ -124,9 +123,6 @@ userRoute.post(
     return next(new AppError("Address succesfully pushed.", 201));
   })
 );
-
-userRoute.get('/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
 
 // export
 module.exports = { userRoute };
