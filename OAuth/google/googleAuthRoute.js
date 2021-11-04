@@ -9,8 +9,13 @@ const oAuthRoute = express.Router() ;
 //   request.  The first step in Google authentication will involve
 //   redirecting the user to google.com.  After authorization, Google
 //   will redirect the user back to this application at /auth/google/callback
+
+oAuthRoute.get("/auth-auth", (req, res, next)=>{
+  res.send('<a href="/auth/google"> Sign In with Google</a>');
+})
+
 oAuthRoute.get('/auth/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+  passport.authenticate('google', { scope: ['profile', 'email']}));
 
 // GET /auth/google/callback
 //   Use passport.authenticate() as route middleware to authenticate the
