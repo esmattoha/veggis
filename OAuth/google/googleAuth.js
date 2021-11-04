@@ -1,6 +1,6 @@
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-// const User = require("./../user/userModel");
+const {User} = require("./../../user/userModel");
 
 // Use the GoogleStrategy within Passport.
 //   Strategies in passport require a `verify` function, which accept
@@ -14,27 +14,23 @@ passport.use(new GoogleStrategy({
   },
   async function(token, tokenSecret, profile, done) {
     console.log(profile);
-  //    const user = await User.findOne({email : profile.email[0].value});
-  //    if(!user){
-  //      const createdUser = await User.create({
-  //        email: profile.email[0].value,
-  //        name:profile.displayName
-  //      });
-  //      if(!createdUser){
-  //        return `Something went wrong.`
-  //      }
-  //      return done(null, createdUser);
-  //    }
-  //    return done(null, user);
+     const user = await User.findOne({email : profile.emails[0].value});
+     if(!user){
+       const createdUser = await User.create({
+         email: profile.emails[0].value,
+         name:profile.displayName,
+         oAuth:{
+           google_id: profile.id
+         }
+       });
+       if(!createdUser){
+         return console.log(`Something went wrong.`)
+       }
+       return done(null, createdUser);
+     }
+     return done(null, user);
   }
 ));
 
-passport.serializeUser(function(user, done){
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done){
-  done(null, user);
-});
 // export
 module.exports = { passport };

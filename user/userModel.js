@@ -25,6 +25,10 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Phone No is Required."],
   },
+  oAuth:{
+    google_id: String,
+    github_id: String
+  },
   type:{
     type: String,
     default : "customer",
